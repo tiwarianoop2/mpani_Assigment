@@ -1,0 +1,21 @@
+from django.conf.urls import patterns, include, url
+from django.contrib import admin
+from django.views.generic import direct_to_template
+#from dajaxice.core import dajaxice_autodiscover
+#dajaxice_autodiscover()
+admin.autodiscover()
+from Admission.api import StudentsResource
+students_resource= StudentsResource()
+urlpatterns = patterns('',
+    # Examples:
+    # url(r'^$', 'mpani2.views.home', name='home'),
+    # url(r'^blog/', include('blog.urls')),
+    #(r'^dajaxice/',include('dajaxice.urls')),                   
+
+    url(r'^admin/', include(admin.site.urls)),
+    #url(r'^Admission/', include('Admission.urls', namespace='Admission')),                   
+    url(r'^api/', include(students_resource.urls)),
+    url(r'^Admission/',include('Admission.urls')),
+    (r'^$', direct_to_template, 
+            { 'template': 'index.html' }, 'index')
+)
